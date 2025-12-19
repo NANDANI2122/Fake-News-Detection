@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake News Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+<div class="container">
+
+    <h2>📰 Fake News Detection System</h2>
+    <h4>This model detects fake news based on text patterns and writing style, not factual verification.</h4>
+
+    <form method="POST" onsubmit="showLoader()">
+        <textarea name="news" rows="8"
+         placeholder="Paste news text here..." required>{{ news_text }}</textarea>
+
+        <br>
+        <button type="submit">Analyze News</button>
+    </form>
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div></div><div></div><div></div>
+    </div>
+
+    {% if prediction %}
+        <div class="result {{ 'fake' if 'FAKE' in prediction else 'real' }}">
+            Result: {{ prediction }}
+        </div>
+
+        {% if confidence %}
+        <div class="confidence">
+            Confidence: {{ confidence }}%
+        </div>
+        {% endif %}
+    {% endif %}
+
+    <div class="note">
+        * This system predicts fake news using AI-based text patterns and does not perform factual verification.
+    </div>
+
+</div>
+
+<script>
+function showLoader() {
+    document.getElementById("loader").style.display = "block";
+}
+</script>
+
+</body>
+</html>
